@@ -14,7 +14,11 @@
       console.log(puterChoice);
 */
 
-      let puterChoice = ["ABCDEF"];
+var fruits = ['Apple', 'Banana'];
+
+console.log(fruits.length);
+
+      /*let puterChoice = ["ABCDEF"];
       console.log(puterChoice);
 /*
 //Convert puter's choice of string to an array 
