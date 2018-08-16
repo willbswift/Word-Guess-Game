@@ -11,7 +11,7 @@
 
 
 // Created an array of themed words
-let puterOptions = ["JOHN CONNER", "TERMINATOR", "KYLE REESE", "SARAH CONNER", "SAM WRIGHT", "SKYNET", "CAMERON", "DEREK REESE"];
+let puterOptions = ["JOHN CONNER", "GUARDIAN TERMINATOR", "KYLE REESE", "SARAH CONNER", "SAM WRIGHT", "SKYNET", "CAMERON", "DEREK REESE", "KATE BREWSTER", "BLAIR WILLIAMS", "MILES DYSON", "JAMES ELLISON", "CROMARTIE", "CATHERINE WEAVER", "TERMINATRIX"];
   // Randomly chooses a choice from the options array. This is the Computer's guess.
   let puterChoice = puterOptions[Math.floor(Math.random() * puterOptions.length)];
 //let puterChoice = ['ABCDEF'];
@@ -36,6 +36,13 @@ let humansLeft = 8;
     console.log("Humans Living " + humansLeft)
 let lettersGuessed = [];
 
+let stringDisplay = currentDisplay.join('');
+//present introductory data on screen
+let html =
+  "<h2>The Terminator's Target is " + stringDisplay + "</h2>" +
+  "<p>Surviving humans: " + humansLeft + "</p>";
+document.querySelector("#game").innerHTML = html;
+
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
   // Determines which key was pressed.
@@ -52,12 +59,19 @@ document.onkeyup = function(event) {
   //insures you can't win by guessing the same winning letter over and over
   if ( currentDisplay.includes(humanChoiceUpper) ) {
     console.log("You already found that letter!  Get Out!");
+    let html =
+      "<h2>You already found that letter!  Get Out!</h2>";
+    document.querySelector("#responses").innerHTML = html;
     }
+
   else {
     //Will check the entire array to see if that letter shows up
     if ( puterChoiceArray.includes(humanChoiceUpper)  ) {
       console.log(humanChoiceUpper);
       console.log("You guessed a correct letter! There's no fate but what we make for ourselves!");
+      let html =
+      "<h2>You guessed a correct letter! There's no fate but what we make for ourselves!</h2>";
+      document.querySelector("#responses").innerHTML = html;  
       letterWins++
       //Will create array of indexes where chosen letter appears
       let idx = puterChoiceArray.indexOf(humanChoiceUpper);
@@ -75,7 +89,10 @@ document.onkeyup = function(event) {
       }
     }
     else {
-      console.log("Wrong Letter - death to humans!");
+      console.log("Wrong Letter - Listen, and understand. That Terminator is out there, it cant be bargained with, it can't be reasoned with, it doesn't feel pity or remorse or fear, and it absolutely will not stop EVER, until you are dead!");
+      let html =
+      "<h2>Wrong Letter - Listen, and understand. That terminator is out there, it cant be bargained with, it can't be reasoned with, it doesn't feel pity or remorse or fear, and it absolutely will not stop EVER, until you are dead!</h2>";
+      document.querySelector("#responses").innerHTML = html;  
       humanDeaths++;
       humansLeft--;
       console.log("Humans Terminated " + humanDeaths);
@@ -86,9 +103,25 @@ document.onkeyup = function(event) {
   console.log ("Letters left to find " + lettersLeft);
   console.log("Humans Living " + humansLeft);
 
+let stringDisplay2 = currentDisplay.join('');
+
+    let html =
+      "<h2>The Terminator's Target is " + stringDisplay2 + "</h2>" +
+      "<p>You have chosen: "  + lettersGuessed + "</p>" +
+      "<p>" + humanDeaths + " people have been terminated so far.</p>" +
+      "<p>Surviving humans: " + humansLeft + "</p>";
+    // Set the inner HTML contents of the #game div to our html string
+    document.querySelector("#game").innerHTML = html;
+
   if ( humansLeft === 0) {
     console.log ("You can't stop Judgement Day!  Hasta la vista, baby");
-    console.log ("Hit any key to travel back in time and try again");
+    console.log ("Hit any key to travel back in time and try again.");
+
+    let html =
+      "<h2>You can't stop Judgement Day!  Hasta la vista, baby </h2>" +
+      "<p>Hit any key to travel back in time and try again.</p>";
+    document.querySelector("#commands").innerHTML = html;
+
     document.onkeyup = function(event) {
       location.reload(); 
     }
@@ -97,27 +130,21 @@ document.onkeyup = function(event) {
   else {
     if ( currentDisplay.includes("_") ) {
           // What the Player sees.
-
-
-    let html =
-      "<p>You chose:  + "(humanChoiceUpper)"</p>";
-      //"<p>The computer chose: " + computerGuess + "</p>" +
-      //"<p>wins: " + wins + "</p>" +
-     // "<p>losses: " + losses + "</p>" +
-     // "<p>ties: " + ties + "</p>";
-
-    // Set the inner HTML contents of the #game div to our html string
-    document.querySelector("#game").innerHTML = html;
-
-
-
       console.log ("Choose your Fate!");
-
+          let html =
+      "<h2>Choose your Fate!</h2>";
+    document.querySelector("#commands").innerHTML = html;
 
     }
     else {
     console.log ("VICTORY!  But I'll be back!");
     console.log ("Hit any key to reboot the franchise");
+
+    let html =
+      "<h2>VICTORY! But I'll be back!</h2>" +
+      "<p>Hit any key so another movie can reboot the franchise.</p>";
+    document.querySelector("#commands").innerHTML = html;
+
     document.onkeyup = function(event) {
       location.reload(); 
     }
