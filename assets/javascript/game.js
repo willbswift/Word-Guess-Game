@@ -114,11 +114,12 @@ let stringDisplay2 = currentDisplay.join('');
     document.querySelector("#game").innerHTML = html;
 
   if ( humansLeft === 0) {
-    console.log ("You can't stop Judgement Day!  Hasta la vista, baby");
+    console.log ("You can't stop Judgment Day!  Hasta la vista, baby");
     console.log ("Hit any key to travel back in time and try again.");
 
     let html =
-      "<h2>You can't stop Judgement Day!  Hasta la vista, baby </h2>" +
+      "<h2>" + puterChoice + " has been terminated.  You can't stop Judgment Day! </p>" +
+      "<p> Hasta la vista, baby </h2>" +
       "<p>Hit any key to travel back in time and try again.</p>";
     document.querySelector("#commands").innerHTML = html;
 
