@@ -5,139 +5,124 @@
 	//Research .carAt() for finding specified characters at start of item. 
 //If it does console thingy
 //update currentDisplay array with appropriate letter????
+//when no dashes are found in currentDisplay then trigger victory - "I'll be back!"
+//when no dashes are found in currentDisplay then trigger final death - "Hasta la vista, baby"
 
-/*
+
+
 // Created an array of themed words
-      let puterOptions = ["JOHN CONNER", "TERMINATOR", "KYLE REESE", "SARAH CONNER", "SAM WRIGHT", "SKYNET", "CAMERON", "DEREK REESE"];
-// Randomly chooses a choice from the options array. This is the Computer's guess.
-      let puterChoice = puterOptions[Math.floor(Math.random() * puterOptions.length)];
-      console.log(puterChoice);
-*/
+let puterOptions = ["JOHN CONNER", "TERMINATOR", "KYLE REESE", "SARAH CONNER", "SAM WRIGHT", "SKYNET", "CAMERON", "DEREK REESE"];
+  // Randomly chooses a choice from the options array. This is the Computer's guess.
+  let puterChoice = puterOptions[Math.floor(Math.random() * puterOptions.length)];
+//let puterChoice = ['ABCDEF'];
+    console.log("Skynet chooses " + puterChoice);
+  //Convert puter's choice of string to an array 
+  let puterChoiceArray = (Array.from(puterChoice));
+    console.log(puterChoiceArray);
 
-      let puterChoice = ["ABCDEF"];
-      console.log(puterChoice);
-/*
-//Convert puter's choice of string to an array 
-      let puterChoiceArray = (Array.from(puterChoice));
-      console.log(puterChoiceArray);
-
-      let currentDisplay = new Array();
-
+//Create empty array to display to player
+let currentDisplay = new Array();
+  //fill with dashes
   for ( let i = 0; i < puterChoiceArray.length; i++ ){
-      currentDisplay.push("-");
-    }
+    currentDisplay.push("_");
+  }
     console.log(currentDisplay);
-  
 
-    // Creating variables to hold the number of wins, losses, and ties. They start at 0.
-    let humanWins = 0;
-    let humansLeft = 0;
-    // let lettersGuessed = ___;
+// Creating variables to hold the number of wins, losses, and ties. They start at 0.
+let letterWins = 0;
+let lettersLeft = (puterChoiceArray.length);
+let humanDeaths = 0;
+let humansLeft = 8;
+    console.log("Humans Living " + humansLeft)
+let lettersGuessed = [];
 
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
+  // Determines which key was pressed.
+  let humanChoice = event.key;
+  // Converts the user's answer to Uppercase.
+  let humanChoiceUpper = humanChoice.toUpperCase();
+    console.log(humanChoiceUpper);
+    lettersGuessed.push(humanChoiceUpper);
+    console.log(lettersGuessed)
 
-      // Determines which key was pressed.
-      let humanChoice = event.key;
+  //Create array to hold discovered letter positions 
+  let positions = [];
 
-      // Converts the user's answer to Uppercase.
-      let humanChoiceLower = humanChoice.toUpperCase();
+  //insures you can't win by guessing the same winning letter over and over
+  if ( currentDisplay.includes(humanChoiceUpper) ) {
+    console.log("You already found that letter!  Get Out!");
+    }
+  else {
+    //Will check the entire array to see if that letter shows up
+    if ( puterChoiceArray.includes(humanChoiceUpper)  ) {
+      console.log(humanChoiceUpper);
+      console.log("You guessed a correct letter! There's no fate but what we make for ourselves!");
+      letterWins++
+      //Will create array of indexes where chosen letter appears
+      let idx = puterChoiceArray.indexOf(humanChoiceUpper);
+      while (idx != -1) {
+        positions.push(idx);
+        idx = puterChoiceArray.indexOf(humanChoiceUpper, idx + 1);
+      }
+        console.log(positions);
 
-
-//Will check the entire array to see if that letter shows up
-  if( [puterChoiceArray].includes(humanChoiceLower)  ) {
-    console.log(humanChoiceLower)
-  }
+      lettersLeft = lettersLeft - positions.length
+      //Updates display so player can see how they are doing
+      for( let i = 0; i < positions.length; i++ ){
+        let targetIndex = positions[i];
+        currentDisplay[targetIndex] = humanChoiceUpper;
+      }
+    }
     else {
       console.log("Wrong Letter - death to humans!");
+      humanDeaths++;
+      humansLeft--;
+      console.log("Humans Terminated " + humanDeaths);
+    }
+  }
+
+  console.log(currentDisplay);
+  console.log ("Letters left to find " + lettersLeft);
+  console.log("Humans Living " + humansLeft);
+
+  if ( humansLeft === 0) {
+    console.log ("You can't stop Judgement Day!  Hasta la vista, baby");
+    console.log ("Hit any key to travel back in time and try again");
+    document.onkeyup = function(event) {
+      location.reload(); 
     }
 
+  }
+  else {
+    if ( currentDisplay.includes("_") ) {
+          // What the Player sees.
+
+
+    let html =
+      "<p>You chose:  + "(humanChoiceUpper)"</p>";
+      //"<p>The computer chose: " + computerGuess + "</p>" +
+      //"<p>wins: " + wins + "</p>" +
+     // "<p>losses: " + losses + "</p>" +
+     // "<p>ties: " + ties + "</p>";
+
+    // Set the inner HTML contents of the #game div to our html string
+    document.querySelector("#game").innerHTML = html;
 
 
 
+      console.log ("Choose your Fate!");
 
 
-      // Now we check the myBands array to see if it contains the user's answer.
-      // If the user's band is not in the array...
-      if (myBands.indexOf(userGuessLower) === -1) {
-        alert("Nah! They're pretty lame...");
-      }
-      // If it is in the array...
-      else {
-        alert("OMG! I love them too!");
-      }
-
-
-//checks for a letter in the array and outputs that correct item from the array.  
-for ( let i = 0; i < animals.length; i++ ){
-	if( animals[i].includes("a")) {
-		console.log(animals[i]);
-	}
+    }
+    else {
+    console.log ("VICTORY!  But I'll be back!");
+    console.log ("Hit any key to reboot the franchise");
+    document.onkeyup = function(event) {
+      location.reload(); 
+    }
+  }
+  }
 }
 
-      // Creating an array of vegetables.
-      var vegetables = ["Carrots", "Peas", "Lettuce", "Tomatoes"];
 
-      // Looping through each item in the array and logging a message to the console.
-      for (var i = 0; i < vegetables.length; i++) {
-        console.log("I love " + vegetables[i]);
-      }
-
-
-      // This is our starting myFarm array.
-      var myFarm = ["chickens", "pigs", "cows", "horses", "ostriches"];
-
-      // Creating a variable to hold our array length.
-      var arrayLength = myFarm.length;
-
-      // Looping through our myFarm array.
-      for (var j = 0; j < arrayLength; j++) {
-
-        // Console out the farm animal in the current index.
-        console.log(myFarm[j]);
-
-        // If the first character in the current animal is "c" or "o", alert the following message.
-        if (myFarm[j].charAt(0) === "c" || myFarm[j].charAt(0) === "o") {
-          alert("Starts with a c or an o!");
-        }
-
-      }
-
-
-      // If petAge equals 5 exactly (in value and data type), run the following block of code.
-      if (petAge === 5) {
-        // Alert this message.
-        alert("My pet is 5 years old");
-      }
-      // Else if petAge is less than 5, run the following block of code.
-      else if (petAge < 5) {
-        // Alert this message.
-        alert("My pet is less than 5 years old");
-      }
-      // If none of the above conditions have been satisfied (petAge is greater than 5), run the following code.
-      else {
-        // Alert this message.
-        alert("My pet is older than 5 years old");
-      }
-
-
-      // Loops through the array to print each zoo animal. MIGHT BE USEFUL FOR READING OUT CURRENT STATUS?
-      for (var i = 0; i < zooAnimals.length; i++) {
-        // Logs the animal at index position i to the console. This code is executed each we go through the loop.
-        console.log(zooAnimals[i]);
-      }
-
-
-        // Creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/losses/ties.
-        var html =
-          "<p>You chose: " + userGuess + "</p>" +
-          "<p>The computer chose: " + computerGuess + "</p>" +
-          "<p>wins: " + wins + "</p>" +
-          "<p>losses: " + losses + "</p>" +
-          "<p>ties: " + ties + "</p>";
-
-        // Set the inner HTML contents of the #game div to our html string
-        document.querySelector("#game").innerHTML = html;
-
-   }
-   };
