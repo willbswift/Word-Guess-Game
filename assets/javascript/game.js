@@ -38,10 +38,12 @@ let lettersGuessed = [];
 
 let stringDisplay = currentDisplay.join('');
 //present introductory data on screen
+let html2 =
+  "<h2>THE TERMINATOR'S TARGET IS: <br>" + stringDisplay + "</h2>";
+  document.querySelector(".target").innerHTML = html2;
 let html =
-  "<h2>The Terminator's Target is " + stringDisplay + "</h2>" +
   "<p>Surviving humans: " + humansLeft + "</p>";
-document.querySelector("#game").innerHTML = html;
+document.querySelector(".game").innerHTML = html;
 
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
@@ -61,17 +63,17 @@ document.onkeyup = function(event) {
     console.log("You already found that letter!  Get Out!");
     let html =
       "<h2>You already found that letter!  Get Out!</h2>";
-    document.querySelector("#responses").innerHTML = html;
+    document.querySelector(".responses").innerHTML = html;
     }
 
   else {
     //Will check the entire array to see if that letter shows up
     if ( puterChoiceArray.includes(humanChoiceUpper)  ) {
       console.log(humanChoiceUpper);
-      console.log("You guessed a correct letter! There's no fate but what we make for ourselves!");
+      console.log("You guessed a correct letter!");
       let html =
       "<h2>You guessed a correct letter! There's no fate but what we make for ourselves!</h2>";
-      document.querySelector("#responses").innerHTML = html;  
+      document.querySelector(".responses").innerHTML = html;  
       letterWins++
       //Will create array of indexes where chosen letter appears
       let idx = puterChoiceArray.indexOf(humanChoiceUpper);
@@ -89,10 +91,10 @@ document.onkeyup = function(event) {
       }
     }
     else {
-      console.log("Wrong Letter - Listen, and understand. That Terminator is out there, it cant be bargained with, it can't be reasoned with, it doesn't feel pity or remorse or fear, and it absolutely will not stop EVER, until you are dead!");
+      console.log("Wrong Letter!");
       let html =
-      "<h2>Wrong Letter - Listen, and understand. That terminator is out there, it cant be bargained with, it can't be reasoned with, it doesn't feel pity or remorse or fear, and it absolutely will not stop EVER, until you are dead!</h2>";
-      document.querySelector("#responses").innerHTML = html;  
+      "<h3>WRONG LETTER!<br>Listen, and understand. That terminator is out there, it cant be bargained with, it can't be reasoned with, it doesn't feel pity or remorse or fear, and it absolutely will not stop EVER, until you are dead!</h3>";
+      document.querySelector(".responses").innerHTML = html;  
       humanDeaths++;
       humansLeft--;
       console.log("Humans Terminated " + humanDeaths);
@@ -105,23 +107,30 @@ document.onkeyup = function(event) {
 
 let stringDisplay2 = currentDisplay.join('');
 
+    let html2 =
+      "<h2>THE TERMINATOR'S TARGET IS: <br>" + stringDisplay2 + "</h2>";
+    document.querySelector(".target").innerHTML = html2;
+
     let html =
-      "<h2>The Terminator's Target is " + stringDisplay2 + "</h2>" +
       "<p>You have chosen: "  + lettersGuessed + "</p>" +
       "<p>" + humanDeaths + " people have been terminated so far.</p>" +
       "<p>Surviving humans: " + humansLeft + "</p>";
-    // Set the inner HTML contents of the #game div to our html string
-    document.querySelector("#game").innerHTML = html;
+    // Set the inner HTML contents of the .game div to our html string
+    document.querySelector(".game").innerHTML = html;
 
   if ( humansLeft === 0) {
-    console.log ("You can't stop Judgment Day!  Hasta la vista, baby");
-    console.log ("Hit any key to travel back in time and try again.");
-
+    console.log ("You lose Hit any key to try again.");
+    let audioElement = document.createElement("audio");
+      audioElement.setAttribute("src", "assets/sound/hasta-la-vista-baby.mp3");
+      audioElement.play();
+    let html2 =
+      "<h3> </h3>";
+      document.querySelector(".responses").innerHTML = html2;  
     let html =
       "<h2>" + puterChoice + " has been terminated.  You can't stop Judgment Day! </p>" +
       "<p> Hasta la vista, baby </h2>" +
-      "<p>Hit any key to travel back in time and try again.</p>";
-    document.querySelector("#commands").innerHTML = html;
+      "<h3>Hit any key to travel back in time and try again.</h3>";
+    document.querySelector(".commands").innerHTML = html;
 
     document.onkeyup = function(event) {
       location.reload(); 
@@ -134,17 +143,22 @@ let stringDisplay2 = currentDisplay.join('');
       console.log ("Choose your Fate!");
           let html =
       "<h2>Choose your Fate!</h2>";
-    document.querySelector("#commands").innerHTML = html;
+    document.querySelector(".commands").innerHTML = html;
 
     }
     else {
-    console.log ("VICTORY!  But I'll be back!");
-    console.log ("Hit any key to reboot the franchise");
+    console.log ("Hit any key to reboot");
+    let audioElement = document.createElement("audio");
+      audioElement.setAttribute("src", "assets/sound/terminator_theme.mp3");
+      audioElement.play();
+    let html2 =
+    "<h3> </h3>";
+    document.querySelector(".responses").innerHTML = html2;  
 
     let html =
       "<h2>VICTORY! But I'll be back!</h2>" +
-      "<p>Hit any key so another movie can reboot the franchise.</p>";
-    document.querySelector("#commands").innerHTML = html;
+      "<h3>Hit any key so another movie can reboot the franchise.</h3>";
+    document.querySelector(".commands").innerHTML = html;
 
     document.onkeyup = function(event) {
       location.reload(); 
